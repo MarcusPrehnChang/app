@@ -18,8 +18,8 @@ public class ClothingController {
         boolean filters = true;
         List<Tag> answer = new ArrayList<>();
 
-        if(data.filter.get(0).equals("all") || data.filter.get(0).equals("All")){
-            filters = false;
+        if(data.filter.get(0).equals("all") || data.filter.get(0).equals("All") || data.filter.get(0).equals("any")){
+            filters = false; //Check if filters are present.
         }
 
         if(filters){
@@ -47,27 +47,35 @@ public class ClothingController {
             totalWeight = 100*(amountOfTags - data.tagList.size());
             for (Tag tag : data.tagList){
                 totalWeight += tag.value;
-            } // we might have to migrate to a different way of handling this, will require getting all tags present on the database, can do that by sending different message in the amount request, and asking for the entire list.
-
+            }
+            filteredTags.addAll(data.tagList);
         }
 
 
-
+        int prevWeight = 0; //0 Til at starte med
         Random random = new Random();
-        int randomNumber = random.nextInt(totalWeight);
+        int randomNumber = 0;
         for(int i = 5; i > 0; i--){
-            for(int j = 0; j < filteredTags.size(); j++){
-                currentWeight += filteredTags.get(j).value;
-                if(randomNumber < currentWeight){
-                    answer.add(filteredTags.get(j));
+            randomNumber = random.nextInt(totalWeight);
+
+            boolean hit = false;
+            for (Tag filteredTag : filteredTags) {
+                currentWeight += filteredTag.value;
+
+                if (randomNumber < currentWeight && randomNumber >= prevWeight) {
+                    answer.add(filteredTag);
+                    hit = true;
                     break;
                 }
+                prevWeight = currentWeight;
             }
-            for(int k = 0; k < unfilteredTags.size(); k++){
-
+            if(!hit){
+                answer.add(new Tag("", -1));
             }
+            currentWeight = 0;
+            prevWeight = 0;
         }
-
+        return ResponseEntity.ok(answer);
     }
 
     @GetMapping("/tags/{amount}")
