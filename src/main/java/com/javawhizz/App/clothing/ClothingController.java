@@ -9,7 +9,7 @@ import java.util.Random;
 
 @RequestMapping("api")
 public class ClothingController {
-    int amountOfTags = 0;
+    int amountOfTags = 100;
     @PostMapping("/process")
     public ResponseEntity<?> processResource(@RequestBody CombinedData data){
         List<Tag> filteredTags = new ArrayList<>();
