@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+@RestController
 @RequestMapping("api")
 public class ClothingController {
     int amountOfTags = 100;
