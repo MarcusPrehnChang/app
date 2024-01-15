@@ -91,6 +91,7 @@ public class ClothingController {
 
     @GetMapping("/tags/{amount}")
     public ResponseEntity<?> checkNumber(@PathVariable int amount){
+        System.out.println("tags amount");
         if (amount != amountOfTags){
             amountOfTags = amount;
         }
