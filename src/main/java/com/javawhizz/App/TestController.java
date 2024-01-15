@@ -1,5 +1,6 @@
 package com.javawhizz.App;
 
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,4 +19,10 @@ public class TestController {
         }
         return ResponseEntity.ok("Updated or same");
     }
+
+    @GetMapping("/test2")
+    public ResponseEntity<?> test(){
+        return ResponseEntity.ok("test");
+    }
+
 }
