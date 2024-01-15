@@ -11,7 +11,8 @@ import java.util.Random;
 public class ClothingController {
     int amountOfTags = 100;
     @PostMapping("/process")
-    public ResponseEntity<?> processResource(@RequestBody CombinedData data){
+    public ResponseEntity<List<Tag>> processResource(@RequestBody CombinedData data){
+        System.out.println("ProcessResource");
         List<Tag> filteredTags = new ArrayList<>();
         int totalWeight = 0; //Total amount of weight distributed.
         int currentWeight = 0; //data.tagList.get(0).value; CurrentWeight to keep track of if statements.
