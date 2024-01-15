@@ -30,6 +30,7 @@ public class ClothingController {
         int currentWeight = 0; //data.tagList.get(0).value; CurrentWeight to keep track of if statements.
         boolean filters = true;
         List<Tag> answer = new ArrayList<>();
+        System.out.println(data.getFilter().size());
 
         if(data.getFilter().get(0).equals("all") || data.getFilter().get(0).equals("All") || data.getFilter().get(0).equals("any")){
             filters = false; //Check if filters are present.
@@ -84,7 +85,7 @@ public class ClothingController {
                 prevWeight = currentWeight;
             }
             if(!hit){
-                answer.add(new Tag("", -1));
+                answer.add(new Tag("any", -1));
             }
             currentWeight = 0;
             prevWeight = 0;
