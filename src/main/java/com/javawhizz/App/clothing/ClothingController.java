@@ -15,38 +15,41 @@ public class ClothingController {
     @PostMapping("/process")
     public ResponseEntity<List<Tag>> processResource(@RequestBody CombinedData data){
         System.out.println("ProcessResource");
+        System.out.println("Received request payload: " + data);
+        System.out.println(data.getTagList().size() + " taglist size");
         List<Tag> filteredTags = new ArrayList<>();
         String filterData = "";
         String tagData = "";
-        for(int i = 0; i < data.tagList.size(); i++){
-            tagData += data.tagList.get(i).name + " ";
+        for(int i = 0; i < data.getTagList().size(); i++){
+            tagData += data.getTagList().get(i).name + " ";
         }
-        for(int i = 0; i < data.filter.size(); i++){
-            filterData += data.filter.get(i) + " ";
+        for(int i = 0; i < data.getFilter().size(); i++){
+            filterData += data.getFilter().get(i) + " ";
         }
         int totalWeight = 0; //Total amount of weight distributed.
         int currentWeight = 0; //data.tagList.get(0).value; CurrentWeight to keep track of if statements.
         boolean filters = true;
         List<Tag> answer = new ArrayList<>();
 
-        if(data.filter.get(0).equals("all") || data.filter.get(0).equals("All") || data.filter.get(0).equals("any")){
+        if(data.getFilter().get(0).equals("all") || data.getFilter().get(0).equals("All") || data.getFilter().get(0).equals("any")){
             filters = false; //Check if filters are present.
         }
 
         if(filters){
-            for (int i = 0; i < data.filter.size(); i++){ //filter iteration
+            System.out.println("no filters");
+            for (int i = 0; i < data.getFilter().size(); i++){ //filter iteration
 
                 boolean found = false;
 
-                for (int j = 0; j < data.tagList.size(); j++){ //Tag iteration
-                    if(data.filter.get(i).equals(data.tagList.get(j).name)){ //tag found
+                for (int j = 0; j < data.getTagList().size(); j++){ //Tag iteration
+                    if(data.getFilter().get(i).equals(data.getTagList().get(j).name)){ //tag found
                         found = true;
-                        filteredTags.add(data.tagList.get(j)); //add tag
+                        filteredTags.add(data.getTagList().get(j)); //add tag
                         break;
                     }
                 }
                 if(!found){
-                    Tag filterTag = new Tag(data.filter.get(i), 100);
+                    Tag filterTag = new Tag(data.getFilter().get(i), 100);
                     filteredTags.add(filterTag);
                 }
 
@@ -55,11 +58,11 @@ public class ClothingController {
                 totalWeight += filteredTag.value;
             }
         }else{
-            totalWeight = 100*(amountOfTags - data.tagList.size());
-            for (Tag tag : data.tagList){
+            totalWeight = 100*(amountOfTags - data.getTagList().size());
+            for (Tag tag : data.getTagList()){
                 totalWeight += tag.value;
             }
-            filteredTags.addAll(data.tagList);
+            filteredTags.addAll(data.getTagList());
         }
 
 

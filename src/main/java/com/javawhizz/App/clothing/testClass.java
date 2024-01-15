@@ -18,24 +18,24 @@ public class testClass {
             boolean filters = true;
             List<Tag> answer = new ArrayList<>();
 
-            if (data.filter.get(0).equals("all") || data.filter.get(0).equals("All") || data.filter.get(0).equals("any")) {
+            if (data.getFilter().get(0).equals("all") || data.getFilter().get(0).equals("All") || data.getFilter().get(0).equals("any")) {
                 filters = false; //Check if filters are present.
             }
 
             if(filters){
-                for (int i = 0; i < data.filter.size(); i++) { //filter iteration
+                for (int i = 0; i < data.getFilter().size(); i++) { //filter iteration
 
                     boolean found = false;
 
-                    for (int j = 0; j < data.tagList.size(); j++) { //Tag iteration
-                        if (data.filter.get(i).equals(data.tagList.get(j).name)) { //tag found
+                    for (int j = 0; j < data.getTagList().size(); j++) { //Tag iteration
+                        if (data.getFilter().get(i).equals(data.getTagList().get(j).name)) { //tag found
                             found = true;
-                            filteredTags.add(data.tagList.get(j)); //add tag
+                            filteredTags.add(data.getTagList().get(j)); //add tag
                             break;
                         }
                     }
                     if (!found) {
-                        Tag filterTag = new Tag(data.filter.get(i), 100);
+                        Tag filterTag = new Tag(data.getFilter().get(i), 100);
                         filteredTags.add(filterTag);
                     }
 
@@ -45,13 +45,13 @@ public class testClass {
                 }
             } else {
 
-                totalWeight = 100 * (amountOfTags - data.tagList.size());
+                totalWeight = 100 * (amountOfTags - data.getTagList().size());
 
-                for (Tag tag : data.tagList) {
+                for (Tag tag : data.getTagList()) {
                     totalWeight += tag.value;
                 }
 
-                filteredTags.addAll(data.tagList);
+                filteredTags.addAll(data.getTagList());
             }
 
 
