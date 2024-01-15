@@ -14,6 +14,14 @@ public class ClothingController {
     public ResponseEntity<List<Tag>> processResource(@RequestBody CombinedData data){
         System.out.println("ProcessResource");
         List<Tag> filteredTags = new ArrayList<>();
+        String filterData = "";
+        String tagData = "";
+        for(int i = 0; i < data.tagList.size(); i++){
+            tagData += data.tagList.get(i).name + " ";
+        }
+        for(int i = 0; i < data.filter.size(); i++){
+            filterData += data.filter.get(i) + " ";
+        }
         int totalWeight = 0; //Total amount of weight distributed.
         int currentWeight = 0; //data.tagList.get(0).value; CurrentWeight to keep track of if statements.
         boolean filters = true;
